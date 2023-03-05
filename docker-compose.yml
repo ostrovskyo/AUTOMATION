@@ -1,0 +1,36 @@
+version: '3'
+services:
+
+  webserver:
+    image: nginx:stable-alpine
+    container_name: webserver
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - sandbox
+
+    webserver-test:
+    image: nginx:stable-alpine
+    container_name: webserver-test
+    restart: unless-stopped
+    ports:
+      - "8081:80"
+      - "8443:443"
+    networks:
+      - sandbox
+
+  mysql:
+    container_name: mysql
+    image: biarms/mysql:5.7
+    restart: always
+    environment:
+      - "MYSQL_ROOT_PASSWORD=1234"
+    volumes:
+      - "$PWD/db_data:/var/lib/mysql"
+    networks:
+      - sandbox
+
+networks:
+  sandbox:
