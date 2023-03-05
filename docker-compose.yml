@@ -5,13 +5,16 @@ services:
     image: nginx:stable-alpine
     container_name: webserver
     restart: unless-stopped
+    build:
+      context: .
+      dockerfile: Dockerfile  
     ports:
       - "80:80"
       - "443:443"
     networks:
       - sandbox
 
-    webserver-test:
+  webserver-test:
     image: nginx:stable-alpine
     container_name: webserver-test
     restart: unless-stopped
